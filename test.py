@@ -12,6 +12,7 @@ if __name__ == '__main__':
             seq_num += 1
             file_path = os.path.join(root, file)
             file_num_list.append(file_path)
+            print(file_path)
 
             with open(file_path, 'r') as f:
                 text = f.read()
