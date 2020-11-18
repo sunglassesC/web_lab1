@@ -1,4 +1,6 @@
-dataset/
+/dataset/*
+!/dataset/empty.txt
+/output/*
+!/output/empty.txt
 venv
 .idea
-output/
