@@ -1,3 +1,4 @@
-dataset/maildir
+dataset/
 venv
 .idea
+output/
