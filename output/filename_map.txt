@@ -1,3 +1,0 @@
-
-./dataset/test\allen-p\all_documents\1
-./dataset/test\allen-p\all_documents\2

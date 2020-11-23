@@ -1,3 +1,6 @@
-dataset/maildir
+/dataset/*
+!/dataset/empty.txt
+/output/*
+!/output/empty.txt
 venv
 .idea
