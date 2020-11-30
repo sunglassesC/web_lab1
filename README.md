@@ -10,24 +10,60 @@ python
 
 
 
+#### 项目结构
+
+```
+exp1/
+|----src/
+	|----bool_query.py			//布尔查询
+	|----tfidf_query.py			//语义查询
+	|----build_posting_list.py	//构建倒排表
+	|----build_tfidf_matrix.py	//构建tfidf矩阵
+|----dataset/
+	|----empty
+|----output/
+	|----posting_list.npy			//倒排表
+	|----tfidf_matrix.npy			//tfidf矩阵
+|----inf/						//该目录用来存放关于数据集的一些信息
+	|----file_name_map.txt			//文档编号与文档路径的映射
+	|----first_1000_token_list.txt	//倒排表中词频前1000的词的列表
+|----实验报告.pdf
+|----README
+```
+
+1. 先运行`build_posting_list.py`构建倒排表，以及生成inf中两个文本信息，用于之后生成tfidf矩阵以及查询
+2. 再运行`build_tfidf_matrix.py`构建tfidf矩阵
+3. 最后分别运行`bool_query.py`和`tfidf_query.py`作布尔查询和语义查询
+
+
+
+
+
 #### 依赖模块
 
-nltk
+- nltk
 
+  安装方法
 
+  - `sudo pip install nltk`
 
-In order to install NLTK run the following commands in your terminal.
+  - 然后在终端中输入`python`打开python交互模式
 
-- `sudo pip install nltk`
-- Then, enter the python shell in your terminal by simply typing `python`
-- Type `import nltk`
-- `nltk.download(‘all’)`
+  - 输入 `import nltk``
 
-> [参考](https://www.geeksforgeeks.org/tokenize-text-using-nltk-python/?ref=lbp)
+  - ``nltk.download(‘all’)`
 
+    [参考来源](https://www.geeksforgeeks.org/tokenize-text-using-nltk-python/?ref=lbp)
 
+- numpy
+
+  安装方法`pip install numpy`
+
+  
 
 ## 处理步骤
+
+#### 生成倒排表
 
 - 仅保留邮件的主体和正文部分
 
@@ -39,7 +75,20 @@ In order to install NLTK run the following commands in your terminal.
 
 - 得到倒排表（取词频前1000的词）
 
-倒排表使用python中的字典结构，以单词为键，出现的文档编号组成的数组为值。这里需要说明的是，如果使用邮件的路径作为文档名，类似`./dataset/maildir\allen-p\all_documents\2`这样的字符串，占用空间太多，且由于文档和词的关系是一对多，倒排表中文档名会大量出现，故对所有文档进行编号，将编号和路径的映射输出并存储到`output`文件中，在后续查询时可先得到文档编号，后根据编号及映射表找到文档路径。
+倒排表使用python中的字典结构，以单词为键，出现的文档编号组成的数组为值。这里需要说明的是，如果使用邮件的路径作为文档名，类似`./dataset/maildir\allen-p\all_documents\2`这样的字符串，占用空间太多，且由于文档和词的关系是一对多，倒排表中文档名会大量出现，故对所有文档进行编号，将编号和路径的映射输出并存储到`inf`文件中，在后续查询时可先得到文档编号，后根据编号及映射表找到文档路径。
+
+
+
+实际实验过程中，按以上步骤处理后得到的词频前1000的词，偶然发现其中有"thi"这样的词项，猜测是由于词根化将"this"变为了"thi"，故对上述步骤加以修改，在词根化之前先去一次停用词，然后在词根化后再去一次。
+
+这样做的依据是如果一个词本身就和停用词表中的词完全一致，那它基本上(笔者没有想到反例)就是一个停用词，而将剩下的词词根化后，亦可能得到新的停用词。故新的步骤为：
+
+- 仅保留邮件的主体和正文部分
+- 分词
+- 去停用词
+- 词根化
+- 去停用词
+- 得到倒排表（取词频前1000的词）
 
 
 
