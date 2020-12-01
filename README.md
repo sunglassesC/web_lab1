@@ -49,9 +49,9 @@ exp1/
 
   - 然后在终端中输入`python`打开python交互模式
 
-  - 输入 `import nltk``
+  - 输入 `import nltk`
 
-  - ``nltk.download(‘all’)`
+  - `nltk.download(‘all’)`
 
     [参考来源](https://www.geeksforgeeks.org/tokenize-text-using-nltk-python/?ref=lbp)
 
