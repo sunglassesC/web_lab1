@@ -41,7 +41,7 @@ if __name__ == '__main__':
                 current_email = Parser(policy=default).parsestr(text)
                 body = current_email.get_payload()          # 邮件正文
                 subject_text = current_email['Subject']     # 邮件主题
-                body += ' ' + subject_text                  # 主题并入正文，不作特殊处理
+                body += ' ' + str(subject_text)                  # 主题并入正文，不作特殊处理
 
                 # 分词
                 word_tokens = word_tokenize(body)
